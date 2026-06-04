@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>weatherapp</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+  </head>
+  <body>
+    <div id="app" class="app">
+      <div class="card">
+        <div class="header">
+          <div class="title">Instant City Weather</div>
+          <div class="desc">Please type city name for see the citys weather.</div>
+        </div>
+        <div class="main">
+          <form action="#">
+            <input type="text" placeholder="Input city name" id="cityInput">
+            <button id="getWeatherBtn" type="submit">See The Weather</button>
+          </form>
+          <div class="weather-results hidden" id="weatherResults">
+            <div class="city-name" id="cityName"></div>
+            <div class="temp" id="temp"></div>
+            <div class="weather-icon">
+              <img id="weatherIcon" src="" alt="" />
+            </div>
+          </div>
+          <div class="error-section hidden" id="errorSection">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <div class="error-message" id="errorMessage">This is a error message!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
