@@ -20,8 +20,16 @@
             <button id="getWeatherBtn" type="submit">See The Weather</button>
           </form>
           <div class="weather-results hidden" id="weatherResults">
-            <div class="city-name" id="cityName"></div>
-            <div class="temp" id="temp"></div>
+            <div class="info-section cityInfo">
+              <i class="fa-solid fa-city"></i>
+              <span>Şehir: </span>
+              <div class="city-name" id="cityName"></div>
+            </div>
+            <div class="info-section">
+              <i class="fa-solid fa-temperature-high"></i>
+              <span>Hissedilen Sıcaklık: </span>
+              <div class="temp" id="temp"></div>
+            </div>
             <div class="weather-icon">
               <img id="weatherIcon" src="" alt="" />
             </div>

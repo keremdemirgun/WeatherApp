@@ -44,6 +44,39 @@
   cursor: pointer;
 }
 
+.weather-results{
+  color: white;
+  font-size: 25px;
+  padding: 15px;
+}
+
+.weather-results .cityInfo{
+  margin-bottom: 10px;
+}
+
+.weather-results .city-name {
+  font-weight: bold;
+}
+
+.weather-results .temp{
+  font-weight: bold;
+}
+
+.weather-results .fa-city{
+  color: #00aeff;
+}
+
+.weather-results .fa-temperature-high{
+  color: #f32c2c;
+}
+
+.info-section{
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  align-items: center;
+}
+
 form{
   margin: 20px;
 }
