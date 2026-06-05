@@ -1,61 +1,67 @@
 import './style.css'
+
 const weatherResults = document.getElementById('weatherResults');
 const cityInput = document.getElementById('cityInput');
 const temp = document.getElementById('temp');
 const weatherIcon = document.getElementById('weatherIcon');
-const getWeatherBtn = document.getElementById("getWeatherBtn");
-const errorMessage = document.getElementById("errorMessage");
-const errorSection = document.getElementById("errorSection");
-const cityName = document.getElementById("cityName");
+const errorSection = document.getElementById('errorSection');
+const errorMessage = document.getElementById('errorMessage');
+const cityName = document.getElementById('cityName');
+const weatherForm = document.querySelector('form');
 
-let lang = "tr"
-const API_KEY = "fee2409e94afe601cc737187d5b14da9";
-
+let lang = "tr";
+const API_KEY = "";
 
 async function getWeather(sehir) {
-
-    if(cityInput.value.trim() == ""){
+    const trimmedCity = sehir.trim();
+    
+    if (trimmedCity === "") {
         showError("Lütfen şehir kısmını boş bırakmayınız.");
-        
+        return;
     }
-    else{
+
+    try {
         weatherResults.classList.add("hidden");
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${sehir}&appid=${API_KEY}&lang=${lang}&units=metric`);
-        const data = await response.json();
+        errorSection.classList.add("hidden");
         
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${trimmedCity}&appid=${API_KEY}&lang=${lang}&units=metric`);
+        
+        if (!response.ok) {
+            if (response.status === 404) {
+                showError("Şehir bulunamadı.");
+            } else {
+                showError("Bir hata oluştu, lütfen sonra tekrar deneyin.");
+            }
+            return;
+        }
+
+        const data = await response.json();
         console.log(data);
         showWeatherData(data);
+
+    } catch (error) {
+        showError("Sunucuya bağlanılamadı. İnternet bağlantınızı kontrol edin.");
+        console.error(error);
     }
-
-
 }
 
-getWeatherBtn.addEventListener("click", function() {
+weatherForm.addEventListener("submit", function(e) {
+    e.preventDefault(); 
     getWeather(cityInput.value);
-
 });
 
-
-function showWeatherData(data){
-    if(data.message == "city not found"){
-        showError("Şehir bulunamadı.");
-    }
-    else{
-        errorSection.classList.add("hidden");
-        weatherResults.classList.remove("hidden");
-        cityName.textContent = data.name;
-        temp.textContent = data.main.feels_like + "°";
-        weatherIcon.setAttribute("src", `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
-    }
-
-
-
+function showWeatherData(data) {
+    errorSection.classList.add("hidden");
+    weatherResults.classList.remove("hidden");
+    
+    cityName.textContent = data.name;
+    temp.textContent = Math.round(data.main.temp) + "°C"; 
+    weatherIcon.setAttribute("src", `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
+    weatherIcon.setAttribute("alt", data.weather[0].description);
 }
 
-function showError(msg){
+function showError(msg) {
     weatherResults.classList.add("hidden");
-    console.error(msg);
     errorSection.classList.remove("hidden");
     errorMessage.textContent = msg;
 }
-
